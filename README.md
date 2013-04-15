@@ -1,4 +1,8 @@
 makefile
 ========
 
-makefile_simple
+MakeFile Sample
+
+C/C++
+
+LaTeX/Tex
