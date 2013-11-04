@@ -1,8 +1,4 @@
 makefile
 ========
 
-MakeFile Sample
-
-C/C++
-
-LaTeX/Tex
+MakeFile Sample for C/C++
