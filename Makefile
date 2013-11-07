@@ -15,7 +15,7 @@ OBJS=$(patsubst $(SRC_DIR)/%.$(EXTENSION), $(OBJ_DIR)/%.o,$(wildcard $(SRC_DIR)/
 
 ###### include path ######
 INCLUDE=\
-		-I $(INCLUDE_DIR)
+		-I$(INCLUDE_DIR)
 		
 ###### lib path ######
 
@@ -28,14 +28,7 @@ LDFLAGS=
 .PHONY: all clean
 
 all:$(OBJS) 
-	@echo $(DEPS_DIR)
 	$(CC) -o $(PROGRAM) $(OBJS) $(LDFLAGS) 
-
-
-$(DEPS_DIR)/%.d: $(SRC_DIR)/%.$(EXTENSION)
-	$(CC) -MM $(INCLUDE) $(CFLAGS) $< | sed -e 1's,^,$(OBJ_DIR)/,' > $@
-
-sinclude $(DEPS)
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.$(EXTENSION) 
 	$(CC) $< -o $@ -c $(CFLAGS) $(INCLUDE)
