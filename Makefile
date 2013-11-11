@@ -1,38 +1,47 @@
-# makefile
+#=======================================
+# makefile, v1.0.0
+# Author: iamhaha <dingshlong@gmail.com>
+# Desc: makefile sample for c++ projects;
+#         generate executable binaries.
+#=======================================
 
 ###### Paths ######
 DIR=$(shell pwd)
 BIN_DIR=$(DIR)/bin
 LIB_DIR=$(DIR)/lib
 SRC_DIR=$(DIR)/src
-INCLUDE_DIR=$(DIR)/include
 OBJ_DIR=$(DIR)/obj
-PROGRAM=$(BIN_DIR)/test
+INCLUDE_DIR=$(DIR)/include
+OUTPUT=$(BIN_DIR)/output
 
 ###### source files ######
-EXTENSION=c
+EXTENSION=cpp
 OBJS=$(patsubst $(SRC_DIR)/%.$(EXTENSION), $(OBJ_DIR)/%.o,$(wildcard $(SRC_DIR)/*.$(EXTENSION)))
 
 ###### include path ######
-INCLUDE=\
-		-I$(INCLUDE_DIR)
-		
+INCLUDE=-I$(INCLUDE_DIR)
+        
 ###### lib path ######
+LIBINCLUDE=-L$(LIB_DIR)
 
 ###### Compiler settings ######
-CC=gcc
-CFLAGS=-Wall -W -g 
-LDFLAGS=
+CC=g++
+CFLAGS=-c -Wall -g 
+LFLAGS=-Wall -g
 
 ###### Targets ######
-.PHONY: all clean
+.PHONY: all prep clean
 
-all:$(OBJS) 
-	$(CC) -o $(PROGRAM) $(OBJS) $(LDFLAGS) 
+all: $(OBJS)
+	$(CC) $(LFLAGS) $(OBJS) -o $(OUTPUT)
+
+prep:
+	@echo "Check output directories:"
+	if [ ! -d $(OBJ_DIR) ]; then mkdir -p $(OBJ_DIR); fi;
+	if [ ! -d $(BIN_DIR) ]; then mkdir -p $(BIN_DIR); fi;
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.$(EXTENSION) 
-	$(CC) $< -o $@ -c $(CFLAGS) $(INCLUDE)
+	$(CC) $< $(CFLAGS) $(INCLUDE) -o $@
 
 clean:
-	rm -rf $(OBJS) $(LIB_DIR)/lib* $(BIN_DIR)/* 
-
+	-rm -rf $(OBJS) $(BIN_DIR)/*
