@@ -32,7 +32,8 @@ LFLAGS=-Wall -g
 ###### Targets ######
 .PHONY: all prep clean
 
-all: $(OBJS)
+all: prep $(OBJS)
+	@echo "Generate $(OUTPUT):"
 	$(CC) $(LFLAGS) $(OBJS) -o $(OUTPUT)
 
 prep:
@@ -41,6 +42,7 @@ prep:
 	if [ ! -d $(BIN_DIR) ]; then mkdir -p $(BIN_DIR); fi;
 
 $(OBJ_DIR)/%.o:$(SRC_DIR)/%.$(EXTENSION) 
+	@echo "Compile $@:"
 	$(CC) $< $(CFLAGS) $(INCLUDE) -o $@
 
 clean:
